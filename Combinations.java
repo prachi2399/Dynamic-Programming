@@ -62,4 +62,41 @@ public class Combination{
     }
     return dp[tar];
 }
+  
+  public int ZeroOneKnapSack(int[] wts, int [] vals, int capacity){
+    int[][] dp=new int[n+1][capacity+1];
+    for(int i=1;i<dp.length;i++){
+        for(int j=1;j<dp[0].length;j++){
+            dp[i][j]=dp[i-1][j];
+            if(j>=wts[i-1]){
+                int rem=j-wts[i-1];
+                if(dp[i-1][rem]+vals[i-1]>dp[i-1][j]){
+                    dp[i][j]=dp[i-1][rem]+vals[i-1];
+                }
+               
+            }
+        }
+    }
+    return dp[n][capacity];
+}
+
+public int ZeroOneKnapSack(int[] wts, int [] vals, int capacity){
+    int[] dp=new int[capacity+1];
+    dp[0]=0;
+    for(int c=1;c<=capacity;c++){
+        int max=0;
+        for(int i=0;i<n;i++){
+            if(c>=wts[i]){
+                int remc=c-wts[i];
+                int remv=dp[remc];
+                int tc=remv+vals[i];
+                if(tc>max) max=tc;
+            }
+        }
+        dp[c]=max;
+    }
+    
+    return dp[capacity];
+}
+
 }
